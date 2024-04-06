@@ -181,9 +181,7 @@ fun NewRecordScreen() {
                 }
             }
 
-            HistoryItemView(pulseData = HistoryItem(
-                100, 100, LocalDateTime.now(), 100
-            ))
+
 
         }
 

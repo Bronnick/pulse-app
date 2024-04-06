@@ -55,29 +55,40 @@ sealed class Screen(
 
 val testHistoryList = listOf(
     HistoryItem(
-        100, 100, LocalDateTime.now(), 100
+        1,
+        systolicPressure = 100,
+        diastolicPressure = 100,
+        localDateTime = LocalDateTime.now().toString(),
+        pulse = 100
     ),
     HistoryItem(
-        100, 100, LocalDateTime.now(), 100
+        1,
+        systolicPressure = 100,
+        diastolicPressure = 100,
+        localDateTime = LocalDateTime.now().toString(),
+        pulse = 100
     ),
     HistoryItem(
-        100, 100, LocalDateTime.now(), 100
+        1,
+        systolicPressure = 100,
+        diastolicPressure = 100,
+        localDateTime = LocalDateTime.now().toString(),
+        pulse = 100
     ),
     HistoryItem(
-        100, 100, LocalDateTime.now(), 100
+        1,
+        systolicPressure = 100,
+        diastolicPressure = 100,
+        localDateTime = LocalDateTime.now().toString(),
+        pulse = 100
     ),
     HistoryItem(
-        100, 100, LocalDateTime.now(), 100
+        1,
+        systolicPressure = 100,
+        diastolicPressure = 100,
+        localDateTime = LocalDateTime.now().toString(),
+        pulse = 100
     ),
-    HistoryItem(
-        100, 100, LocalDateTime.now(), 100
-    ),
-    HistoryItem(
-        100, 100, LocalDateTime.now(), 100
-    ),
-    HistoryItem(
-        100, 100, LocalDateTime.now(), 100
-    )
 )
 
 @OptIn(ExperimentalMaterial3Api::class)
