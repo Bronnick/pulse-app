@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.pulse_app.ui.theme.PulseappTheme
+import com.example.pulse_app.ui.theme.composables.PulseApp
 import com.example.pulse_app.ui.theme.composables.new_record_screen.NewRecordScreen
 import com.example.pulse_app.ui.theme.composables.new_record_screen.Scroller
 
@@ -27,8 +28,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    NewRecordScreen()
-
+                    PulseApp()
                 }
             }
         }

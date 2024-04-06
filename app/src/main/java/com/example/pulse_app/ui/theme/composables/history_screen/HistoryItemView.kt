@@ -40,7 +40,7 @@ fun HistoryItemView(
                 .fillMaxWidth()
                 .height(100.dp)
                 .background(
-                    color = Color.LightGray,
+                    color = Color.DarkGray,
                     shape = RoundedCornerShape(10.dp)
                 )
                 .padding(all = 8.dp),
@@ -67,7 +67,7 @@ fun HistoryItemView(
                         bottom = 4.dp
                     )
                     .width(10.dp)
-                    .height(70.dp)
+                    .height(80.dp)
                     .background(
                         color = Color.Green,
                         shape = RoundedCornerShape(10.dp)
