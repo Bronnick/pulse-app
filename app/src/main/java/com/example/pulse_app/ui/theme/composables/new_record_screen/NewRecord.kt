@@ -45,12 +45,15 @@ import androidx.compose.ui.window.DialogProperties
 import com.example.pulse_app.R
 import com.example.pulse_app.classes.HistoryItem
 import com.example.pulse_app.ui.theme.composables.history_screen.HistoryItemView
+import com.example.pulse_app.view_models.HistoryViewModel
 import java.time.LocalDateTime
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NewRecordScreen() {
+fun NewRecordScreen(
+    viewModel: HistoryViewModel
+) {
 
     var showDatePickerDialog by remember {
         mutableStateOf(false)
@@ -118,7 +121,7 @@ fun NewRecordScreen() {
                             shape = RoundedCornerShape(10.dp)
                         )*/
                             .clip(RoundedCornerShape(5.dp, 5.dp, 5.dp, 5.dp))
-                            .background(color = Color.LightGray),
+                            .background(color = Color.DarkGray),
                     ) {
                         Box(
                             modifier = Modifier.padding(
@@ -156,7 +159,7 @@ fun NewRecordScreen() {
                             shape = RoundedCornerShape(10.dp)
                         )*/
                             .clip(RoundedCornerShape(5.dp, 5.dp, 5.dp, 5.dp))
-                            .background(color = Color.LightGray),
+                            .background(color = Color.DarkGray),
                     ) {
                         Box(
                             modifier = Modifier.padding(
@@ -181,6 +184,31 @@ fun NewRecordScreen() {
                 }
             }
 
+            Surface(
+                modifier = Modifier.padding(all=16.dp)
+                    .clickable {
+                        viewModel.addNewRecord(
+                            HistoryItem(0,100,100,
+                            LocalDateTime.now().toString(), 100
+                        ))
+                    }
+            ) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(40.dp)
+                        .background(
+                            color = MaterialTheme.colorScheme.onPrimary,
+                            shape = RoundedCornerShape(10.dp)
+                        )
+                        .padding(all = 8.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = "Save"
+                    )
+                }
+            }
 
 
         }
@@ -217,6 +245,7 @@ fun NewRecordScreen() {
 
     }
 }
+
 
 @Composable
 fun TimePickerDialog(

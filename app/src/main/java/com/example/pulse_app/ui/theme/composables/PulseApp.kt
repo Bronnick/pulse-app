@@ -149,7 +149,7 @@ fun PulseApp() {
                 route = Screen.MainScreen.route,
             ) {
                 MainScreen(
-                    history = testHistoryList,
+                    viewModel = historyViewModel,
                     onViewAllHistoryButtonClick = {
                         navController.navigate(Screen.HistoryScreen.route)
                     },
@@ -162,13 +162,17 @@ fun PulseApp() {
             composable(
                 route = Screen.HistoryScreen.route
             ) {
-                HistoryScreen(history = testHistoryList)
+                HistoryScreen(
+                    viewModel = historyViewModel
+                )
             }
 
             composable(
                 route = Screen.NewRecordScreen.route
             ) {
-                NewRecordScreen()
+                NewRecordScreen(
+                    viewModel = historyViewModel
+                )
             }
         }
     }

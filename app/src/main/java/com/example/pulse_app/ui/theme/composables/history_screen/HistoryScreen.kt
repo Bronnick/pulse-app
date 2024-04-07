@@ -7,17 +7,20 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.example.pulse_app.classes.HistoryItem
+import com.example.pulse_app.view_models.HistoryViewModel
 
 @Composable
 fun HistoryScreen(
-    history: List<HistoryItem>
+    viewModel: HistoryViewModel
 ) {
+    val history = viewModel.pulseHistory
+
     Column(
         modifier = Modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
     ) {
-        history.forEach { item ->
+        history?.forEach { item ->
             HistoryItemView(pulseData = item)
         }
     }

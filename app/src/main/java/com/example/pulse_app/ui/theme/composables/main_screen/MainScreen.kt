@@ -16,10 +16,12 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.FloatingActionButton
+import androidx.compose.runtime.*
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -28,21 +30,27 @@ import androidx.compose.ui.unit.dp
 import com.example.pulse_app.R
 import com.example.pulse_app.classes.HistoryItem
 import com.example.pulse_app.ui.theme.composables.history_screen.HistoryItemView
+import com.example.pulse_app.view_models.HistoryViewModel
 
 @Composable
 fun MainScreen(
-    history: List<HistoryItem>,
+    viewModel: HistoryViewModel,
     onViewAllHistoryButtonClick: () -> Unit,
     onAddRecordButtonClick: () -> Unit
 ) {
+    val history by remember {
+
+        mutableStateOf(viewModel.pulseHistory)
+    }
+
     Column (
         modifier = Modifier.fillMaxSize()
     ) {
-        history.take(3).forEach { item ->
+        history?.take(3)?.forEach { item ->
             HistoryItemView(pulseData = item)
         }
 
-        if(history.size > 3) {
+        if((history?.size ?: 0) > 3) {
             AllHistoryButton(
                 onViewAllHistoryButtonClick = onViewAllHistoryButtonClick
             )
@@ -69,7 +77,8 @@ fun AllHistoryButton(
     onViewAllHistoryButtonClick: () -> Unit
 ) {
     Surface(
-        modifier = Modifier.padding(all=16.dp)
+        modifier = Modifier
+            .padding(all = 16.dp)
             .clickable {
                 onViewAllHistoryButtonClick()
             }

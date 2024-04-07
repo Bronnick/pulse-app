@@ -14,16 +14,18 @@ class HistoryViewModel(
     private val pulseRepository: PulseRepository
 ) : ViewModel() {
 
-    val pulseHistory: Flow<List<HistoryItem>>
-        = pulseRepository.getPulseHistory()
+    var pulseHistory: List<HistoryItem>? = null
 
     init {
-
+        viewModelScope.launch {
+            pulseHistory = pulseRepository.getPulseHistory()
+        }
     }
 
     fun addNewRecord(historyItem: HistoryItem) {
         viewModelScope.launch {
             pulseRepository.addNewRecord(historyItem)
+            pulseHistory = pulseRepository.getPulseHistory()
         }
     }
 
