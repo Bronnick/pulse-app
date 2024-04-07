@@ -17,8 +17,11 @@ data class HistoryItem (
     @ColumnInfo(name="diastolic")
     val diastolicPressure: Int,
 
+    @ColumnInfo(name="date")
+    val localDate: String,
+
     @ColumnInfo(name="time")
-    val localDateTime: String,
+    val localTime: String,
 
     @ColumnInfo(name="pulse")
     val pulse: Int

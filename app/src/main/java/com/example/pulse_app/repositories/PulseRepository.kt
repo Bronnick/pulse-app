@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 class PulseRepository(
     private val pulseDao: PulseDao
 ) {
-    suspend fun getPulseHistory(): List<HistoryItem> {
+    fun getPulseHistory(): Flow<List<HistoryItem>> {
         return pulseDao.getPulseHistory()
     }
 

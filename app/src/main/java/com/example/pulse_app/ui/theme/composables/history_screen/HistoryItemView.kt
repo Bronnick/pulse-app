@@ -32,10 +32,9 @@ import com.example.pulse_app.classes.HistoryItem
 fun HistoryItemView(
     pulseData: HistoryItem
 ) {
-    val dateTime = pulseData.localDateTime
 
-    val date = pulseData.localDateTime.take(10)
-    val time = pulseData.localDateTime.drop(11).take(5)
+    val date = pulseData.localDate
+    val time = pulseData.localTime
 
     Surface(
         modifier = Modifier.padding(all=16.dp),

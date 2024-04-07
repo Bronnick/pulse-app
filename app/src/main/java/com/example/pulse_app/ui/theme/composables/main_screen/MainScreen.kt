@@ -38,19 +38,16 @@ fun MainScreen(
     onViewAllHistoryButtonClick: () -> Unit,
     onAddRecordButtonClick: () -> Unit
 ) {
-    val history by remember {
-
-        mutableStateOf(viewModel.pulseHistory)
-    }
+    val history by viewModel.pulseHistory.collectAsState(initial = emptyList())
 
     Column (
         modifier = Modifier.fillMaxSize()
     ) {
-        history?.take(3)?.forEach { item ->
+        history.take(3).forEach { item ->
             HistoryItemView(pulseData = item)
         }
 
-        if((history?.size ?: 0) > 3) {
+        if((history.size ?: 0) > 3) {
             AllHistoryButton(
                 onViewAllHistoryButtonClick = onViewAllHistoryButtonClick
             )

@@ -1,10 +1,6 @@
 package com.example.pulse_app.ui.theme.composables.new_record_screen
 
-import android.os.Build
-import androidx.annotation.RequiresApi
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -18,7 +14,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
 import androidx.compose.material3.Button
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
@@ -44,7 +39,8 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.example.pulse_app.R
 import com.example.pulse_app.classes.HistoryItem
-import com.example.pulse_app.ui.theme.composables.history_screen.HistoryItemView
+import com.example.pulse_app.utils.convertLocalDateTimeToDate
+import com.example.pulse_app.utils.convertMillisToDate
 import com.example.pulse_app.view_models.HistoryViewModel
 import java.time.LocalDateTime
 
@@ -55,6 +51,10 @@ fun NewRecordScreen(
     viewModel: HistoryViewModel
 ) {
 
+    val datePickerState = rememberDatePickerState()
+
+    val timePickerState = rememberTimePickerState()
+
     var showDatePickerDialog by remember {
         mutableStateOf(false)
     }
@@ -64,16 +64,13 @@ fun NewRecordScreen(
     }
 
     var localDateTime by remember {
-        mutableStateOf(LocalDateTime.now())
+       mutableStateOf( convertLocalDateTimeToDate(LocalDateTime.now()))
     }
+
 
     var time by remember {
-        mutableStateOf(LocalDateTime.now())
+        mutableStateOf(LocalDateTime.now().toString().drop(11).take(5))
     }
-
-    val datePickerState = rememberDatePickerState()
-
-    val timePickerState = rememberTimePickerState()
 
     Box {
         Column(
@@ -85,14 +82,17 @@ fun NewRecordScreen(
                 horizontalArrangement = Arrangement.SpaceAround
             ) {
                 Scroller(
+                    viewModel = viewModel,
                     paramName = "Diastolic",
                     measurementUnit = "mmHg"
                 )
                 Scroller(
+                    viewModel = viewModel,
                     paramName = "Systolic",
                     measurementUnit = "mmHg"
                 )
                 Scroller(
+                    viewModel = viewModel,
                     paramName = "Pulse",
                     measurementUnit = "BMP"
                 )
@@ -138,7 +138,7 @@ fun NewRecordScreen(
                                 )
                                 Spacer(modifier = Modifier.width(5.dp))
                                 Text(
-                                    text = "${localDateTime.dayOfMonth}/${localDateTime.monthValue}/${localDateTime.year}"
+                                    text = localDateTime
                                 )
                             }
                         }
@@ -176,7 +176,7 @@ fun NewRecordScreen(
                                 )
                                 Spacer(modifier = Modifier.width(5.dp))
                                 Text(
-                                    text = "${time.hour}:${time.minute}"
+                                    text = time
                                 )
                             }
                         }
@@ -185,12 +185,19 @@ fun NewRecordScreen(
             }
 
             Surface(
-                modifier = Modifier.padding(all=16.dp)
+                modifier = Modifier
+                    .padding(all = 16.dp)
                     .clickable {
                         viewModel.addNewRecord(
-                            HistoryItem(0,100,100,
-                            LocalDateTime.now().toString(), 100
-                        ))
+                            HistoryItem(
+                                id = 0,
+                                systolicPressure = viewModel.systolicPressure,
+                                diastolicPressure = viewModel.diastolicPressure,
+                                localDate = viewModel.date,
+                                localTime = viewModel.time,
+                                pulse = viewModel.pulse
+                            )
+                        )
                     }
             ) {
                 Box(
@@ -221,6 +228,13 @@ fun NewRecordScreen(
                 confirmButton = {
                     Button(onClick = {
                         showDatePickerDialog = false
+                        localDateTime =
+                            datePickerState.selectedDateMillis?.let {
+                                convertMillisToDate(
+                                    it
+                                )
+                            } ?: ""
+                        viewModel.setDateValue(localDateTime)
                     }) {
                         Text(text = "OK")
                     } }) {
@@ -233,6 +247,16 @@ fun NewRecordScreen(
                 onDismissRequest = { showTimePickerDialog = false },
                 confirmButton = { Button(onClick = {
                     showTimePickerDialog = false
+                    val hour = StringBuilder(timePickerState.hour.toString())
+                    val minute = StringBuilder(timePickerState.minute.toString())
+                    if(hour.toString().length == 1){
+                        hour.insert(0, "0")
+                    }
+                    if(minute.toString().length == 1){
+                        minute.insert(0, "0")
+                    }
+                    time = "$hour:$minute"
+                    viewModel.setTimeValue(time)
                 }) {
                     Text(text = "OK")
                 } },

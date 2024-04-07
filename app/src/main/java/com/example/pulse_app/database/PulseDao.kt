@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 interface PulseDao {
 
     @Query("SELECT * FROM pulse_data")
-    suspend fun getPulseHistory(): List<HistoryItem>
+    fun getPulseHistory(): Flow<List<HistoryItem>>
 
     @Insert
     suspend fun addNewRecord(historyItem: HistoryItem)

@@ -56,6 +56,7 @@ sealed class Screen(
     )
 }
 
+/*
 val testHistoryList = listOf(
     HistoryItem(
         1,
@@ -93,6 +94,7 @@ val testHistoryList = listOf(
         pulse = 100
     ),
 )
+*/
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

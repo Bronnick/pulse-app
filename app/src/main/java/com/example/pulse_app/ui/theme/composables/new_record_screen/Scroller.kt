@@ -2,7 +2,6 @@ package com.example.pulse_app.ui.theme.composables.new_record_screen
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
@@ -18,8 +17,10 @@ import androidx.compose.foundation.pager.VerticalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Size
@@ -32,15 +33,37 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.pulse_app.view_models.HistoryViewModel
 import kotlinx.coroutines.launch
 import kotlin.math.absoluteValue
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun Scroller(
+    viewModel: HistoryViewModel,
     paramName: String,
     measurementUnit: String
 ) {
+    val pagerState = rememberPagerState(
+        pageCount = { 10 }
+    )
+
+    val scope = rememberCoroutineScope()
+
+    val mutableInteractionSource = remember {
+        MutableInteractionSource()
+    }
+    
+    LaunchedEffect(pagerState) {
+        snapshotFlow { pagerState.currentPage }.collect { page ->
+            when(paramName) {
+                "Diastolic" -> viewModel.setDiastolic(page)
+                "Systolic" -> viewModel.setSystolic(page)
+                "Pulse" -> viewModel.setPulseValue(page)
+            }
+        }
+    }
+
     Column(
         modifier = Modifier.padding(all = 8.dp),
         verticalArrangement = Arrangement.Center,
@@ -59,18 +82,9 @@ fun Scroller(
             modifier = Modifier.heightIn(10.dp, 200.dp),
         ) {
 
-            val pagerState = rememberPagerState(
-                pageCount = { 10 }
-            )
-            val scope = rememberCoroutineScope()
-
-            val mutableInteractionSource = remember {
-                MutableInteractionSource()
-            }
             val contentPadding = (maxHeight - 50.dp) / 2
             val offSet = maxHeight / 3
             val itemSpacing = 20.dp
-
             /*CenterCircle(
             modifier = Modifier
                 .size(50.dp)
