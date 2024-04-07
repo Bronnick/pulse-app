@@ -18,16 +18,16 @@ import androidx.core.view.WindowCompat
 
 private val DarkColorScheme = darkColorScheme(
     primary = Color(0xFF2C9908),
-    secondary = PurpleGrey80,
+    secondary = Green80,
     tertiary = Pink80
 )
 
 private val LightColorScheme = lightColorScheme(
     primary = Color(0xFF2C9908),
-    secondary = PurpleGrey40,
-    tertiary = Pink40
+    secondary = Color(0xFF2C9908),
+    tertiary = Pink40,
 
-    /* Other default colors to override
+
     background = Color(0xFFFFFBFE),
     surface = Color(0xFFFFFBFE),
     onPrimary = Color.White,
@@ -35,7 +35,6 @@ private val LightColorScheme = lightColorScheme(
     onTertiary = Color.White,
     onBackground = Color(0xFF1C1B1F),
     onSurface = Color(0xFF1C1B1F),
-    */
 )
 
 @Composable
@@ -45,6 +44,20 @@ fun PulseappTheme(
     dynamicColor: Boolean = true,
     content: @Composable () -> Unit
 ) {
+    /*val colorScheme = if (darkTheme) {
+        DarkColorScheme
+    } else {
+        LightColorScheme
+    }*/
+
+    /*val dynamicTheme = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
+    val colorScheme = when {
+        dynamicTheme && darkTheme -> dynamicDarkColorScheme(LocalContext.current)
+        dynamicTheme && !darkTheme -> dynamicLightColorScheme(LocalContext.current)
+        darkTheme -> DarkColorScheme
+        else -> LightColorScheme
+    }*/
+
     val colorScheme = when {
         dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
             val context = LocalContext.current

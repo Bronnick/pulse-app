@@ -2,8 +2,10 @@ package com.example.pulse_app.ui.theme.composables.new_record_screen
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -12,9 +14,13 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.pager.PagerDefaults
 import androidx.compose.foundation.pager.VerticalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -23,11 +29,15 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
@@ -44,8 +54,14 @@ fun Scroller(
     paramName: String,
     measurementUnit: String
 ) {
+    val containerColor = if(isSystemInDarkTheme()) Color.DarkGray else Color.White
+    val currentPageLinesColor = if(isSystemInDarkTheme()) Color.White else Color.LightGray
+
+    val displayMetrics = LocalContext.current.resources.displayMetrics
+    val dpWidth = displayMetrics.widthPixels / displayMetrics.density
+
     val pagerState = rememberPagerState(
-        pageCount = { 10 }
+        pageCount = { 121 }
     )
 
     val scope = rememberCoroutineScope()
@@ -64,28 +80,44 @@ fun Scroller(
         }
     }
 
-    Column(
-        modifier = Modifier.padding(all = 8.dp),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+    Surface(
+        modifier = Modifier
+            .padding(all = 8.dp)
+            .width(100.dp)
     ) {
-        Text(
-            text = paramName,
-            textAlign = TextAlign.Center
-        )
-        Text(
-            text = measurementUnit,
-            textAlign = TextAlign.Center
-        )
-
-        BoxWithConstraints(
-            modifier = Modifier.heightIn(10.dp, 200.dp),
+        Column(
+             modifier = Modifier
+                 .background(
+                     color = containerColor,
+                     shape = RoundedCornerShape(10.dp)
+                 )
+                 .width(50.dp)
+                 .padding(top = 8.dp),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            Text(
+                text = paramName,
+                fontWeight = FontWeight.Bold,
+                fontSize = 20.sp,
+                textAlign = TextAlign.Center
+            )
+            Text(
+                text = "($measurementUnit)",
+                fontSize=14.sp,
+                textAlign = TextAlign.Center
+            )
 
-            val contentPadding = (maxHeight - 50.dp) / 2
-            val offSet = maxHeight / 3
-            val itemSpacing = 20.dp
-            /*CenterCircle(
+            BoxWithConstraints(
+                modifier = Modifier.heightIn(10.dp, 200.dp),
+                contentAlignment = Alignment.BottomEnd
+            ) {
+
+                val contentPadding = (maxHeight - 50.dp) / 2
+                val offSet = maxHeight / 5
+                val itemSpacing = 20.dp
+                val elementSize = 55
+                /*CenterCircle(
             modifier = Modifier
                 .size(50.dp)
                 .align(Alignment.Center),
@@ -93,43 +125,62 @@ fun Scroller(
             strokeWidth = 2.dp
         )*/
 
-            VerticalPager(
-                state = pagerState,
-                flingBehavior = PagerDefaults.flingBehavior(
-                    state = pagerState,
-                    //pagerSnapDistance = PagerSnapDistance.atMost()
-                ),
-                contentPadding = PaddingValues(vertical = contentPadding),
-                pageSpacing = itemSpacing,
-            ) { page ->
-                Box(
+                VerticalPager(
                     modifier = Modifier
-                        .size(50.dp)
-                        .graphicsLayer {
-                            val pageOffset = ((pagerState.currentPage - page) + pagerState
-                                .currentPageOffsetFraction).absoluteValue
-                            // Set the item alpha based on the distance from the center
-                            val percentFromCenter = 1.0f - (pageOffset / (5f / 2f))
-                            val opacity = 0.25f + (percentFromCenter * 0.75f).coerceIn(0f, 1f)
+                        .drawBehind {
+                        val borderSize = 1.dp
+                        drawLine(
+                            color = currentPageLinesColor,
+                            start = Offset(-20f, 240f),
+                            end = Offset(size.width+20f, 240f),
+                            strokeWidth = borderSize.toPx(),
+                            pathEffect = PathEffect.cornerPathEffect(5.0f)
+                        )
+                        drawLine(
+                            color = currentPageLinesColor,
+                            start = Offset(-20f, 380f),
+                            end = Offset(size.width+20f, 380f),
+                            strokeWidth = borderSize.toPx(),
+                            pathEffect = PathEffect.cornerPathEffect(5.0f)
+                        )
+                    },
+                    state = pagerState,
+                    flingBehavior = PagerDefaults.flingBehavior(
+                        state = pagerState,
+                        //pagerSnapDistance = PagerSnapDistance.atMost()
+                    ),
+                    contentPadding = PaddingValues(vertical = contentPadding),
+                    pageSpacing = itemSpacing,
+                ) { page ->
+                    Box(
+                        modifier = Modifier
+                            .size(elementSize.dp)
+                            .graphicsLayer {
+                                val pageOffset = ((pagerState.currentPage - page) + pagerState
+                                    .currentPageOffsetFraction).absoluteValue
+                                val percentFromCenter = 1.0f - (pageOffset / (5f / 2f))
+                                val opacity = 0.25f + (percentFromCenter * 0.75f).coerceIn(0f, 1f)
 
-                            alpha = opacity
-                            clip = true
-                        }
-                        .clickable(
-                            interactionSource = mutableInteractionSource,
-                            indication = null,
-                            enabled = true,
-                        ) {
-                            scope.launch {
-                                pagerState.animateScrollToPage(page)
+                                alpha = opacity
+                                clip = true
                             }
-                        }) {
-                    Text(
-                        text = "$page",
-                        textAlign = TextAlign.Center,
-                        fontSize = 40.sp,
-                        fontWeight = FontWeight.Bold
-                    )
+                            .clickable(
+                                interactionSource = mutableInteractionSource,
+                                indication = null,
+                                enabled = true,
+                            ) {
+                                scope.launch {
+                                    pagerState.animateScrollToPage(page)
+                                }
+                            },
+                            contentAlignment = Alignment.Center) {
+                        Text(
+                            text = "$page",
+                            textAlign = TextAlign.Center,
+                            fontSize = 30.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
                 }
             }
         }

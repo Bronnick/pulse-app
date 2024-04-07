@@ -2,6 +2,7 @@ package com.example.pulse_app.ui.theme.composables.main_screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -73,6 +74,8 @@ fun MainScreen(
 fun AllHistoryButton(
     onViewAllHistoryButtonClick: () -> Unit
 ) {
+    val containerColor = if(isSystemInDarkTheme()) Color.DarkGray else Color.White
+
     Surface(
         modifier = Modifier
             .padding(all = 16.dp)
@@ -83,9 +86,9 @@ fun AllHistoryButton(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(40.dp)
+                .height(50.dp)
                 .background(
-                    color = Color.DarkGray,
+                    color = containerColor,
                     shape = RoundedCornerShape(10.dp)
                 )
                 .padding(all = 8.dp),

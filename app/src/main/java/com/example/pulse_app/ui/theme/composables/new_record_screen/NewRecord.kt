@@ -2,6 +2,7 @@ package com.example.pulse_app.ui.theme.composables.new_record_screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -48,8 +49,11 @@ import java.time.LocalDateTime
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NewRecordScreen(
-    viewModel: HistoryViewModel
+    viewModel: HistoryViewModel,
+    onSaveButtonClick: (HistoryItem) -> Unit
 ) {
+
+    val containerColor = if(isSystemInDarkTheme()) Color.DarkGray else Color.White
 
     val datePickerState = rememberDatePickerState()
 
@@ -74,10 +78,13 @@ fun NewRecordScreen(
 
     Box {
         Column(
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(all = 8.dp)
         ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
+                    //.padding(all=8.dp),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceAround
             ) {
@@ -99,7 +106,7 @@ fun NewRecordScreen(
             }
 
             Text(
-                modifier = Modifier.padding(all = 8.dp),
+                modifier = Modifier.padding(top=8.dp, bottom = 8.dp, end=8.dp, start=16.dp),
                 text = "Date & Time",
                 fontSize = 30.sp,
                 fontWeight = FontWeight.Bold
@@ -108,87 +115,83 @@ fun NewRecordScreen(
 
             Row {
                 Row(
-                    modifier = Modifier.clickable {
-                        showDatePickerDialog = true
-                    }
+                    modifier = Modifier
+                        .padding(all = 8.dp)
+                        .clickable {
+                            showDatePickerDialog = true
+                        }
+                        /*.border(
+                        width = 1.dp,
+                        color = Color.Transparent,
+                        shape = RoundedCornerShape(10.dp)
+                    )*/
+                        .clip(RoundedCornerShape(10.dp))
+                        .background(color = containerColor),
                 ) {
-                    Row(
-                        modifier = Modifier
-                            .padding(all = 8.dp)
-                            /*.border(
-                            width = 1.dp,
-                            color = Color.Transparent,
-                            shape = RoundedCornerShape(10.dp)
-                        )*/
-                            .clip(RoundedCornerShape(5.dp, 5.dp, 5.dp, 5.dp))
-                            .background(color = Color.DarkGray),
+                    Box(
+                        modifier = Modifier.padding(
+                            start = 8.dp,
+                            top = 10.dp,
+                            bottom = 10.dp,
+                            end = 30.dp
+                        )
                     ) {
-                        Box(
-                            modifier = Modifier.padding(
-                                start = 8.dp,
-                                top = 10.dp,
-                                bottom = 10.dp,
-                                end = 30.dp
+                        Row {
+                            Icon(
+                                painter = painterResource(id = R.drawable.baseline_calendar_today_24),
+                                contentDescription = null
                             )
-                        ) {
-                            Row {
-                                Icon(
-                                    painter = painterResource(id = R.drawable.baseline_calendar_today_24),
-                                    contentDescription = null
-                                )
-                                Spacer(modifier = Modifier.width(5.dp))
-                                Text(
-                                    text = localDateTime
-                                )
-                            }
+                            Spacer(modifier = Modifier.width(5.dp))
+                            Text(
+                                text = localDateTime
+                            )
                         }
                     }
                 }
 
                 Row(
-                    modifier = Modifier.clickable {
-                        showTimePickerDialog = true
-                    }
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(all = 8.dp)
+                        .clickable {
+                            showTimePickerDialog = true
+                        }
+                        /*.border(
+                        width = 1.dp,
+                        color = Color.Transparent,
+                        shape = RoundedCornerShape(10.dp)
+                    )*/
+                        .clip(RoundedCornerShape(10.dp))
+                        .background(color = containerColor),
                 ) {
-                    Row(
-                        modifier = Modifier
-                            .padding(all = 8.dp)
-                            /*.border(
-                            width = 1.dp,
-                            color = Color.Transparent,
-                            shape = RoundedCornerShape(10.dp)
-                        )*/
-                            .clip(RoundedCornerShape(5.dp, 5.dp, 5.dp, 5.dp))
-                            .background(color = Color.DarkGray),
+                    Box(
+                        modifier = Modifier.padding(
+                            start = 8.dp,
+                            top = 10.dp,
+                            bottom = 10.dp,
+                            end = 30.dp
+                        )
                     ) {
-                        Box(
-                            modifier = Modifier.padding(
-                                start = 8.dp,
-                                top = 10.dp,
-                                bottom = 10.dp,
-                                end = 30.dp
+                        Row {
+                            Icon(
+                                painter = painterResource(id = R.drawable.baseline_access_time_24),
+                                contentDescription = null
                             )
-                        ) {
-                            Row {
-                                Icon(
-                                    painter = painterResource(id = R.drawable.baseline_access_time_24),
-                                    contentDescription = null
-                                )
-                                Spacer(modifier = Modifier.width(5.dp))
-                                Text(
-                                    text = time
-                                )
-                            }
+                            Spacer(modifier = Modifier.width(5.dp))
+                            Text(
+                                text = time
+                            )
                         }
                     }
                 }
+
             }
 
             Surface(
                 modifier = Modifier
-                    .padding(all = 16.dp)
+                    .padding(all = 8.dp)
                     .clickable {
-                        viewModel.addNewRecord(
+                        onSaveButtonClick(
                             HistoryItem(
                                 id = 0,
                                 systolicPressure = viewModel.systolicPressure,
@@ -203,7 +206,7 @@ fun NewRecordScreen(
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(40.dp)
+                        .height(50.dp)
                         .background(
                             color = MaterialTheme.colorScheme.onPrimary,
                             shape = RoundedCornerShape(10.dp)
@@ -212,7 +215,9 @@ fun NewRecordScreen(
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = "Save"
+                        text = "Save",
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Bold
                     )
                 }
             }

@@ -1,6 +1,7 @@
 package com.example.pulse_app.ui.theme.composables.history_screen
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -13,9 +14,11 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -32,6 +35,7 @@ import com.example.pulse_app.classes.HistoryItem
 fun HistoryItemView(
     pulseData: HistoryItem
 ) {
+    val containerColor = if(isSystemInDarkTheme()) Color.DarkGray else Color.White
 
     val date = pulseData.localDate
     val time = pulseData.localTime
@@ -44,7 +48,7 @@ fun HistoryItemView(
                 .fillMaxWidth()
                 .height(100.dp)
                 .background(
-                    color = Color.DarkGray,
+                    color = containerColor,
                     shape = RoundedCornerShape(10.dp)
                 )
                 .padding(all = 8.dp),
@@ -52,7 +56,9 @@ fun HistoryItemView(
             horizontalArrangement = Arrangement.Start
         ) {
             Column(
-                //modifier = Modifier.fillMaxHeight()
+                modifier = Modifier.widthIn(min=40.dp),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
                     text = pulseData.diastolicPressure.toString(),
@@ -72,14 +78,14 @@ fun HistoryItemView(
                         top = 4.dp,
                         bottom = 4.dp
                     )
-                    .width(10.dp)
+                    .width(7.dp)
                     .height(80.dp)
                     .background(
                         color = Color.Green,
                         shape = RoundedCornerShape(10.dp)
                     )
             )
-            Spacer(modifier = Modifier.width(5.dp))
+            Spacer(modifier = Modifier.width(10.dp))
             Column {
                 Text(
                     text = "$time, $date",

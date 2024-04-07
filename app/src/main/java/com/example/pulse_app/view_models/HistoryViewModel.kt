@@ -52,27 +52,22 @@ class HistoryViewModel(
 
     fun setDiastolic(newValue: Int) {
         diastolicPressure = newValue
-        Log.d("myLogs", diastolicPressure.toString())
     }
 
     fun setSystolic(newValue: Int) {
         systolicPressure = newValue
-        Log.d("myLogs", systolicPressure.toString())
     }
 
     fun setPulseValue(newValue: Int) {
         pulse = newValue
-        Log.d("myLogs", pulse.toString())
     }
 
     fun setDateValue(newValue: String) {
         date = newValue
-        Log.d("myLogs", date.toString())
     }
 
     fun setTimeValue(newValue: String) {
         time = newValue
-        Log.d("myLogs", time.toString())
     }
 
     companion object {
