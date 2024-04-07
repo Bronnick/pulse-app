@@ -22,6 +22,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -31,6 +33,7 @@ import com.example.pulse_app.classes.HistoryItem
 import com.example.pulse_app.ui.theme.composables.history_screen.HistoryScreen
 import com.example.pulse_app.ui.theme.composables.main_screen.MainScreen
 import com.example.pulse_app.ui.theme.composables.new_record_screen.NewRecordScreen
+import com.example.pulse_app.view_models.HistoryViewModel
 import java.time.LocalDateTime
 
 sealed class Screen(
@@ -94,6 +97,10 @@ val testHistoryList = listOf(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PulseApp() {
+
+    val historyViewModel: HistoryViewModel =
+        viewModel(factory = HistoryViewModel.Factory)
+
     val navController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination

@@ -19,7 +19,6 @@ import com.example.pulse_app.ui.theme.composables.new_record_screen.NewRecordScr
 import com.example.pulse_app.ui.theme.composables.new_record_screen.Scroller
 import dagger.hilt.android.AndroidEntryPoint
 
-@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
