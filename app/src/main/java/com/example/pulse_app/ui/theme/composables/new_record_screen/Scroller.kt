@@ -131,15 +131,15 @@ fun Scroller(
                         val borderSize = 1.dp
                         drawLine(
                             color = currentPageLinesColor,
-                            start = Offset(-20f, 240f),
-                            end = Offset(size.width+20f, 240f),
+                            start = Offset(-20f, 230f),
+                            end = Offset(size.width+20f, 230f),
                             strokeWidth = borderSize.toPx(),
                             pathEffect = PathEffect.cornerPathEffect(5.0f)
                         )
                         drawLine(
                             color = currentPageLinesColor,
-                            start = Offset(-20f, 380f),
-                            end = Offset(size.width+20f, 380f),
+                            start = Offset(-20f, 370f),
+                            end = Offset(size.width+20f, 370f),
                             strokeWidth = borderSize.toPx(),
                             pathEffect = PathEffect.cornerPathEffect(5.0f)
                         )
