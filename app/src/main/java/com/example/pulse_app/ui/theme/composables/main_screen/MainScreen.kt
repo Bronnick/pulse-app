@@ -32,7 +32,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.pulse_app.R
-import com.example.pulse_app.classes.HistoryItem
 import com.example.pulse_app.ui.theme.composables.history_screen.HistoryItemView
 import com.example.pulse_app.view_models.HistoryViewModel
 

@@ -3,7 +3,6 @@ package com.example.pulse_app.classes
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import java.time.LocalDateTime
 
 @Entity(tableName = "pulse_data")
 data class HistoryItem (

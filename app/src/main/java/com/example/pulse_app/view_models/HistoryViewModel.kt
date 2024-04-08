@@ -1,6 +1,5 @@
 package com.example.pulse_app.view_models
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer

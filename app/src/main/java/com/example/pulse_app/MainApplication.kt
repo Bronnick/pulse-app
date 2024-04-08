@@ -4,7 +4,6 @@ import android.app.Application
 import android.content.Context
 import androidx.room.Room
 import com.example.pulse_app.database.AppDatabase
-import dagger.hilt.android.HiltAndroidApp
 
 
 class MainApplication : Application() {
