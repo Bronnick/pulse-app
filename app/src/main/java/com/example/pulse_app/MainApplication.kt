@@ -10,9 +10,7 @@ import dagger.hilt.android.HiltAndroidApp
 class MainApplication : Application() {
     override fun onCreate() {
         super.onCreate()
-        appDatabase = Room
-            .databaseBuilder(this, AppDatabase::class.java, "database")
-            .build()
+        appDatabase = AppDatabase.getInstance(this)
 
         appContext = this
     }
