@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -27,7 +28,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.pulse_app.R
 import com.example.pulse_app.classes.HistoryItem
 import com.example.pulse_app.ui.theme.composables.history_screen.HistoryItemView
@@ -60,7 +63,11 @@ fun MainScreen(
                 .fillMaxSize(),
             contentAlignment = Alignment.BottomEnd
         ) {
-            FloatingActionButton(onClick = onAddRecordButtonClick) {
+            FloatingActionButton(
+                onClick = onAddRecordButtonClick,
+                containerColor = Color(0, 128, 104),
+                shape = CircleShape
+            ) {
                 Icon(
                     imageVector = Icons.Filled.Add,
                     contentDescription = null
@@ -99,8 +106,12 @@ fun AllHistoryButton(
                 painter = painterResource(id = R.drawable.baseline_history_24),
                 contentDescription = null
             )
-            Spacer(modifier = Modifier.width(5.dp))
-            Text(text = "All History")
+            Spacer(modifier = Modifier.width(7.dp))
+            Text(
+                text = "All History",
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold
+            )
         }
     }
 }

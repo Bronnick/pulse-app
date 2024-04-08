@@ -56,7 +56,7 @@ fun HistoryItemView(
             horizontalArrangement = Arrangement.Start
         ) {
             Column(
-                modifier = Modifier.widthIn(min=40.dp),
+                modifier = Modifier.widthIn(min=50.dp),
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
@@ -81,7 +81,7 @@ fun HistoryItemView(
                     .width(7.dp)
                     .height(80.dp)
                     .background(
-                        color = Color.Green,
+                        color = Color(0, 128, 104),
                         shape = RoundedCornerShape(10.dp)
                     )
             )
@@ -92,7 +92,7 @@ fun HistoryItemView(
                     fontSize = 25.sp,
                 )
                 Text(
-                    text = "Pulse: ${pulseData.pulse}",
+                    text = "Pulse: ${pulseData.pulse} BMP",
                     fontSize = 25.sp,
                 )
             }

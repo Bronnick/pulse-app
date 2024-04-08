@@ -158,7 +158,7 @@ fun Scroller(
                             .graphicsLayer {
                                 val pageOffset = ((pagerState.currentPage - page) + pagerState
                                     .currentPageOffsetFraction).absoluteValue
-                                val percentFromCenter = 1.0f - (pageOffset / (5f / 2f))
+                                val percentFromCenter = 1.0f - (pageOffset / (2.25f / 2f))
                                 val opacity = 0.25f + (percentFromCenter * 0.75f).coerceIn(0f, 1f)
 
                                 alpha = opacity

@@ -208,7 +208,7 @@ fun NewRecordScreen(
                         .fillMaxWidth()
                         .height(50.dp)
                         .background(
-                            color = MaterialTheme.colorScheme.onPrimary,
+                            color = Color(0, 128, 104),
                             shape = RoundedCornerShape(10.dp)
                         )
                         .padding(all = 8.dp),
@@ -217,6 +217,7 @@ fun NewRecordScreen(
                     Text(
                         text = "Save",
                         fontSize = 20.sp,
+                        color = Color.White,
                         fontWeight = FontWeight.Bold
                     )
                 }

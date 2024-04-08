@@ -27,6 +27,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -118,7 +119,7 @@ fun PulseApp() {
 
     val scope = rememberCoroutineScope()
 
-    val surfaceColor = if(isSystemInDarkTheme()) Color(0xFF383A37) else Color(0xFF40BD21)
+    val surfaceColor = if(isSystemInDarkTheme()) Color(0xFF383A37) else Color(0xFFE7E7E7)
 
     Scaffold(
         modifier = Modifier.fillMaxSize()
@@ -147,6 +148,7 @@ fun PulseApp() {
                             IconButton(onClick = { navController.popBackStack() }) {
                                 Icon(
                                     imageVector = Icons.Filled.ArrowBack,
+                                    tint = Color.White,
                                     contentDescription = null
                                 )
                             }
@@ -154,6 +156,8 @@ fun PulseApp() {
                         Spacer(modifier = Modifier.width(10.dp))
                         Text(
                             text = text,
+                            color = Color.White,
+                            fontWeight = FontWeight.Bold,
                             textAlign = TextAlign.Center
                         )
                     }
