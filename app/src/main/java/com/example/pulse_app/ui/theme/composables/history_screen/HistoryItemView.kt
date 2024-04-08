@@ -61,12 +61,12 @@ fun HistoryItemView(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = pulseData.diastolicPressure.toString(),
+                    text = pulseData.systolicPressure.toString(),
                     fontSize = 25.sp,
                     fontWeight = FontWeight.Bold
                 )
                 Text(
-                    text = pulseData.systolicPressure.toString(),
+                    text = pulseData.diastolicPressure.toString(),
                     fontSize = 25.sp,
                     fontWeight = FontWeight.Bold
                 )

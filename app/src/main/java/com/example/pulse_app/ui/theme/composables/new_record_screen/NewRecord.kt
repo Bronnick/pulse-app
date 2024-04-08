@@ -90,12 +90,12 @@ fun NewRecordScreen(
             ) {
                 Scroller(
                     viewModel = viewModel,
-                    paramName = "Diastolic",
+                    paramName = "Systolic",
                     measurementUnit = "mmHg"
                 )
                 Scroller(
                     viewModel = viewModel,
-                    paramName = "Systolic",
+                    paramName = "Diastolic",
                     measurementUnit = "mmHg"
                 )
                 Scroller(
@@ -103,6 +103,7 @@ fun NewRecordScreen(
                     paramName = "Pulse",
                     measurementUnit = "BMP"
                 )
+
             }
 
             Text(
