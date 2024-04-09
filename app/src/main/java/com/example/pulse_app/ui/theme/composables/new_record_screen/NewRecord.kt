@@ -244,7 +244,14 @@ fun NewRecordScreen(
                         viewModel.setDateValue(localDateTime)
                     }) {
                         Text(text = "OK")
-                    } }) {
+                    } },
+                dismissButton = {
+                    Button(onClick = {
+                        showDatePickerDialog = false
+                    }) {
+                        Text(text = "Dismiss")
+                    }
+                }) {
                 DatePicker(state = datePickerState)
             }
         }
@@ -267,7 +274,13 @@ fun NewRecordScreen(
                 }) {
                     Text(text = "OK")
                 } },
-                dismissButton = { /*TODO*/ }
+                dismissButton = {
+                    Button(onClick = {
+                        showTimePickerDialog = false
+                    }) {
+                        Text(text = "Dismiss")
+                    }
+                }
             ) {
                 TimePicker(state = timePickerState)
             }
