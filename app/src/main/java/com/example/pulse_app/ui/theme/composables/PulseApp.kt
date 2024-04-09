@@ -38,7 +38,9 @@ import com.example.pulse_app.R
 import com.example.pulse_app.ui.theme.composables.history_screen.HistoryScreen
 import com.example.pulse_app.ui.theme.composables.main_screen.MainScreen
 import com.example.pulse_app.ui.theme.composables.new_record_screen.NewRecordScreen
+import com.example.pulse_app.utils.convertLocalDateTimeToDate
 import com.example.pulse_app.view_models.HistoryViewModel
+import java.time.LocalDateTime
 
 sealed class Screen(
     val route: String,
@@ -109,11 +111,6 @@ fun PulseApp() {
 
     val navController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
-    val currentDestination = navBackStackEntry?.destination
-
-    val snackbarHostState = remember { SnackbarHostState() }
-
-    val scope = rememberCoroutineScope()
 
     val surfaceColor = if(isSystemInDarkTheme()) Color(0xFF383A37) else Color(0xFFE7E7E7)
 
@@ -175,6 +172,8 @@ fun PulseApp() {
                         navController.navigate(Screen.HistoryScreen.route)
                     },
                     onAddRecordButtonClick = {
+                        historyViewModel.setDateValue(convertLocalDateTimeToDate(LocalDateTime.now()))
+                        historyViewModel.setTimeValue(LocalDateTime.now().toString().drop(11).take(5))
                         navController.navigate(Screen.NewRecordScreen.route)
                     }
                 )
